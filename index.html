@@ -1,84 +1,241 @@
 <!DOCTYPE html>
-
 <html lang="zh-CN">
 
 <head>
-
 <title>张嘉杰的个人主页</title>
-
 <meta charset="UTF-8">
 
 <style>
 
+
+
+/* 导航栏整体（一条横贯页面顶部的色带） */
+.navbar
+{
+background-color: purple;
+position: sticky;           /* 粘性定位：页面滚动时，导航栏吸附在窗口顶部 */
+top: 0;                     /* 吸附在距窗口顶部 0 的位置 */
+display: flex;              /* 弹性布局：让里面的链接自动横向排成一行 */
+justify-content: center;    /* 整行链接在导航栏内水平居中 */
+flex-wrap: wrap;            /* 窗口太窄时允许链接换行，避免被挤出屏幕 */
+padding: 12px 0;
+}
+
+/* 导航栏里的每个链接 */
+.navbar a
+{
+color: white;
+text-decoration: none;    /* 去掉链接默认的下划线 */
+font-size: 17px;
+padding: 8px 18px;        /* 撑大点击区域，让链接更好点 */
+margin: 4px 6px;          /* 链接之间的间距 */
+border-radius: 6px;       /* 圆角 */
+}
+
+/* :hover 伪类 */
+.navbar a:hover
+{
+background-color: white;
+color: purple;
+}
+
+/* 上方留出导航栏的高度，避免标题被遮住 */
+#info, #hobby, #education, #direction
+{
+scroll-margin-top: 70px;
+}
+
+/* 求学经历的大圆角框 */
+.edu-box
+{
+border-radius: 16px;       /* 大框的四个角切成半径 16px 的圆弧 */
+padding: 8px 20px 20px;    /* 让里面的小框不贴到大框边上 */
+margin-left: 24px;
+margin-right: 24px;
+margin-bottom: 24px;
+}
+
+/* 装小圆角框的容器 */
+.stage-wrap
+{
+display: flex;             /* 弹性布局：让里面的子元素横向排列 */
+flex-wrap: wrap;           /* 一行放不下时允许换到下一行 */
+gap: 16px;
+}
+
+/* 小圆角框 */
+.stage
+{
+flex: 1 1 300px;
+margin: 0;                    /* 去掉 <p> 自带的上下外边距，框与框的间距交给 gap 管 */
+padding: 14px 16px;
+background-color: white;
+border: 1px solid #dddddd;
+border-radius: 12px;
+}
+
 body
 {
 background-color: blanchedalmond;
+margin: 0;                           /* 去掉浏览器给 body 的默认外边距，让导航栏紧贴页面左右边缘 */
 }
 
+.main
+{
+background-color: white;
+border-radius: 12px;
+margin-top: 32px;
+margin-bottom: 32px;
+margin-left: auto;
+margin-right: auto;
+padding-bottom: 16px;
+padding-top: 16px;
+width: min(100%, 1000px)
+}
+
+.greeting
+{
+color:blue;
+font-size: 48px;
+padding-left: 24px;
+margin-left: 24px;
+}
+
+.basic-info-wrap
+{
+background-color: #f4f4f4;
+border-radius: 12px;
+display: flex;
+align-items: center;
+gap: 24px;
+margin-bottom: 24px;
+padding-left: 16px;
+margin-right: 24px;
+margin-left: 24px;
+}
+
+.basic-info-image
+{
+margin-top: 16px;
+margin-bottom: 16px;
+}
+
+.hobbies
+{
+border-radius: 16px;
+background-color: #f4f4f4;
+padding: 8px 20px 8px;
+margin-bottom: 24px;
+margin-right: 24px;
+margin-left: 24px;
+}
+
+.title
+{
+border-left: 8px solid blue;
+padding-left: 12px;
+line-height: 1.5;
+}
+
+.study
+{
+background-color: pink;
+border-radius: 12px;
+margin-right: 24px;
+margin-left: 24px;
+padding: 8px 20px 8px;
+}
+
+
 </style>
-
 </head>
-
 
 <body>
 
-<h1 style="color:purple; text-align:center">欢迎来到我的个人主页！</h1>
+<nav class="navbar">
+    <a href="#top">首页</a>
+    <a href="#info">个人信息</a>
+    <a href="#hobby">爱好</a>
+    <a href="#education">求学经历</a>
+    <a href="#direction">学习方向</a>
+</nav>
 
-<h2>这里是我的一些个人信息：</h2>
+<main class="main">
+    <h1 class="greeting">欢迎来到我的个人主页！</h1>
 
-<h3>姓名：张嘉杰</h3>
+    <div class="basic-info-wrap" id="info">
+        <div class="basic-info-image">
+            <img src="web_project/微信头像.jpg" alt="张嘉杰的微信头像" width="180" height="180"><br>
+            <i>↑这是我的微信头像↑</i>
+        </div>
+        <div class="basic-info">
+            <h1>你好，我是张嘉杰</h1>
 
-<h3>生日：2007年11月6日</h3>
+            <h3>生日：2007年11月6日</h3>
 
-<h3>家乡：上海</h3>
+            <h3>家乡：上海</h3>
+        </div>
+    </div>
 
-<div style="background-color:aqua">
-<h3>爱好：</h3>
+    <div id="hobby" class="hobbies">
+        <div class="title">
+            <h1>我的爱好：</h1>
 
-<p>
-1. 看足球比赛<br>
-<br>
-2. 听音乐<br>
-<br>
-3. 语言学习与研究（吴方言、外语）<br>
-</p>
-</div>
+        </div>
 
-<div style="background-color:white">
-<h3>求学经历：</h3>
+        <p>1. 看足球比赛</p>
 
-<p style="color:grey">
-小学：华东师范大学宝山实验学校（2014.09-2019.06）
-</p>
-<p style="color:green">
-初中：华东师范大学宝山实验学校（2019.09-2023.06）
-</p>
-<p style="color:blue">
-高中：上海市行知中学（2023.09-2026.06）<br>
-<img src="web_project/上海市行知中学校徽.webp" alt="上海市行知中学校徽" width="120" height="120">
-<a href="https://school.bsedu.org.cn/xzhs/" target="_blank" rel="noopener noreferrer">点击访问上海市行知中学官网</a>
-</p>
-<p style="color:indigo">
-大学（本科）：上海外国语大学-数据科学与大数据技术（认知科学大数据）（2026.09-至今）<br>
-<img src="web_project/上外校徽.jpg" alt="上海外国语大学校徽" width="150" height="150">
-<a href="https://www.shisu.edu.cn/" target="_blank" rel="noopener noreferrer">点击访问上海外国语大学官网</a>
-</p>
-<p>
-<i>*不知道以后是否还会继续深造！</i>
-</p>
-</div>
+        <p>2. 听音乐</p>
 
-<div style="background-color:pink">
-<h3>我的学习方向：</h3>
+        <p>3. 语言学习与研究（吴方言、外语）</p>
 
-<p>
-当今时代，AI技术空前发达，我需要在扎实学习理工科知识技能的同时，发掘、培养AI不具备<br>
-而由人所独有的特质和能力，那就是情感、创造力、批判性思维和人文关怀。我希望通过跨学科<br>
-交叉融合的学习实践，成为文理兼备的复合型人才，实现理想、造福人类！
-</p>
-</div>
+    </div>
 
-<h1 style="text-align:center">Interpret The World, Translate The Future.</h1>
+    <div id="education" class="edu-box" style="background-color:#f4f4f4">
+        <h1 class="title">求学经历：</h1>
+
+        <div class="stage-wrap">
+
+            <p class="stage">
+            小学：华东师范大学宝山实验学校（2014.09-2019.06）<br>
+            <img src="web_project/华师宝山.webp" alt="华师宝山校徽" width="120" height="120">
+            </p>
+
+            <p class="stage">
+            初中：华东师范大学宝山实验学校（2019.09-2023.06）<br>
+            <img src="web_project/华师宝山.webp" alt="华师宝山校徽" width="120" height="120">
+            </p>
+
+            <p class="stage">
+            高中：上海市行知中学（2023.09-2026.06）<br>
+            <img src="web_project/上海市行知中学校徽.webp" alt="上海市行知中学校徽" width="120" height="120">
+            <a href="https://school.bsedu.org.cn/xzhs/" target="_blank" rel="noopener noreferrer">点击访问上海市行知中学官网</a>
+            </p>
+
+            <p class="stage">
+            大学（本科）：上海外国语大学-数据科学与大数据技术（认知科学大数据）（2026.09-至今）<br>
+            <img src="web_project/上外校徽.jpg" alt="上海外国语大学校徽" width="150" height="150">
+            <a href="https://www.shisu.edu.cn/" target="_blank" rel="noopener noreferrer">点击访问上海外国语大学官网</a>
+            </p>
+
+        </div>
+
+        <p>
+        <i>*不知道以后是否还会继续深造！</i>
+        </p>
+    </div>
+
+    <div id="direction" class="study">
+        <h1 class="title">我的学习方向：</h1>
+
+        <p>
+        当今时代，AI技术空前发达，我需要在扎实学习理工科知识技能的同时，发掘、培养AI不具备而由人所独有的特质和能力，那就是情感、创造力、批判性思维和人文关怀。我希望通过跨学科交叉融合的学习实践，成为文理兼备的复合型人才，实现理想、造福人类！
+        </p>
+    </div>
+
+    <h1 style="text-align:center">Interpret The World, Translate The Future.</h1>
+
+</main>
 
 </body>
 
