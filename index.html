@@ -4,81 +4,80 @@
 <head>
 <title>张嘉杰的个人主页</title>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
 
+/* ========== 配色变量 ========== */
 
-
-/* 导航栏整体（一条横贯页面顶部的色带） */
-.navbar
+/* :root 表示整份文档的根，写在这里的自定义变量全页面都能用 */
+:root
 {
-background-color: purple;
-position: sticky;           /* 粘性定位：页面滚动时，导航栏吸附在窗口顶部 */
-top: 0;                     /* 吸附在距窗口顶部 0 的位置 */
-display: flex;              /* 弹性布局：让里面的链接自动横向排成一行 */
-justify-content: center;    /* 整行链接在导航栏内水平居中 */
-flex-wrap: wrap;            /* 窗口太窄时允许链接换行，避免被挤出屏幕 */
-padding: 12px 0;
+--accent: #1d4ed8;         /* 主色：深蓝 */
+--accent-soft: #e8f1fd;    /* 主色的浅色底，用来做大板块的底色 */
+--bg: #e0e6f4;             /* 页面背景：淡蓝紫，和蓝色主色是同一色系 */
 }
 
-/* 导航栏里的每个链接 */
-.navbar a
-{
-color: white;
-text-decoration: none;    /* 去掉链接默认的下划线 */
-font-size: 17px;
-padding: 8px 18px;        /* 撑大点击区域，让链接更好点 */
-margin: 4px 6px;          /* 链接之间的间距 */
-border-radius: 6px;       /* 圆角 */
-}
+/* ========== 全页基础 ========== */
 
-/* :hover 伪类 */
-.navbar a:hover
+/* 锚点跳转时平滑滚动（点击导航栏慢慢滑过去），纯 CSS，不需要 JavaScript */
+html
 {
-background-color: white;
-color: purple;
-}
-
-/* 上方留出导航栏的高度，避免标题被遮住 */
-#info, #hobby, #education, #direction
-{
-scroll-margin-top: 70px;
-}
-
-/* 求学经历的大圆角框 */
-.edu-box
-{
-border-radius: 16px;       /* 大框的四个角切成半径 16px 的圆弧 */
-padding: 8px 20px 20px;    /* 让里面的小框不贴到大框边上 */
-margin-left: 24px;
-margin-right: 24px;
-margin-bottom: 24px;
-}
-
-/* 装小圆角框的容器 */
-.stage-wrap
-{
-display: flex;             /* 弹性布局：让里面的子元素横向排列 */
-flex-wrap: wrap;           /* 一行放不下时允许换到下一行 */
-gap: 16px;
-}
-
-/* 小圆角框 */
-.stage
-{
-flex: 1 1 300px;
-margin: 0;                    /* 去掉 <p> 自带的上下外边距，框与框的间距交给 gap 管 */
-padding: 14px 16px;
-background-color: white;
-border: 1px solid #dddddd;
-border-radius: 12px;
+scroll-behavior: smooth;
 }
 
 body
 {
-background-color: blanchedalmond;
-margin: 0;                           /* 去掉浏览器给 body 的默认外边距，让导航栏紧贴页面左右边缘 */
+background-color: var(--bg);
+margin: 0;
+font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif;  /* 全站字体 */
+line-height: 1.7;          /* 行高：字号的 1.7 倍，正文读起来更松快 */
 }
+
+/* ========== 导航栏 ========== */
+
+.navbar
+{
+background-color: var(--accent);
+position: sticky;
+top: 0;
+display: flex;
+justify-content: center;
+flex-wrap: wrap;
+padding: 12px 0;
+box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);   /* 导航栏底部投一圈淡淡的阴影 */
+}
+
+.navbar a
+{
+color: white;
+text-decoration: none;
+font-size: 17px;
+padding: 8px 18px;
+margin: 4px 6px;
+border-radius: 6px;
+transition: background-color 0.2s, color 0.2s;   /* 悬停变色用 0.2 秒平滑过渡 */
+}
+
+.navbar a:hover
+{
+background-color: white;
+color: var(--accent);
+}
+
+/* 高亮当前板块：由下方 JavaScript 给对应链接加上 active 这个 class，样式在这里定义 */
+.navbar a.active
+{
+background-color: white;
+color: var(--accent);
+}
+
+#info, #hobby, #education, #direction, #contact
+{
+scroll-margin-top: 70px;
+}
+
+/* ========== 中间大卡片 ========== */
 
 .main
 {
@@ -88,64 +87,246 @@ margin-top: 32px;
 margin-bottom: 32px;
 margin-left: auto;
 margin-right: auto;
-padding-bottom: 16px;
 padding-top: 16px;
-width: min(100%, 1000px)
+padding-bottom: 24px;
+width: min(100%, 1000px);
+box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);   /* 大卡片整体浮起来一点 */
 }
 
 .greeting
 {
-color:blue;
-font-size: 48px;
-padding-left: 24px;
-margin-left: 24px;
+color: var(--accent);
+font-size: 46px;
+margin: 8px 24px 20px;         /* 上 8px、左右 24px、下 20px（三值写法） */
 }
+
+/* ========== 个人信息 ========== */
 
 .basic-info-wrap
 {
-background-color: #f4f4f4;
+background-color: var(--accent-soft);
 border-radius: 12px;
 display: flex;
-align-items: center;
+flex-wrap: wrap;               /* 窗口太窄时文字换到头像下面 */
+align-items: center;           /* 头像和文字竖直方向对齐到中线 */
 gap: 24px;
-margin-bottom: 24px;
-padding-left: 16px;
-margin-right: 24px;
-margin-left: 24px;
+margin: 0 24px 24px;
+padding: 16px 20px;
 }
 
 .basic-info-image
+{
+text-align: center;
+font-size: 13px;
+color: #888888;
+}
+
+.basic-info-image img
+{
+border-radius: 50%;            /* 圆角半径 = 宽度的一半，正方形头像变成正圆 */
+border: 4px solid white;       /* 头像外圈留一圈白边 */
+}
+
+.basic-info
+{
+flex: 1 1 240px;               /* 文字区起步 240px，剩余宽度都给它 */
+}
+
+.basic-info h2
+{
+margin: 0 0 10px;
+font-size: 28px;
+color: var(--accent);
+}
+
+.basic-info h3
+{
+margin: 8px 0;
+font-size: 18px;
+}
+
+/* ========== 各板块通用的小标题 ========== */
+
+.title
+{
+border-left: 8px solid var(--accent);
+padding-left: 12px;
+line-height: 1.4;
+font-size: 26px;
+margin: 0 0 12px;
+color: #333333;
+}
+
+/* ========== 爱好 ========== */
+
+.hobbies
+{
+background-color: var(--accent-soft);
+border-radius: 16px;
+padding: 8px 20px 20px;
+margin: 0 24px 24px;
+}
+
+.hobby-list
+{
+display: flex;
+flex-wrap: wrap;
+gap: 12px;
+}
+
+.hobby-item
+{
+flex: 1 1 200px;
+margin: 0;
+padding: 12px 16px;
+background-color: white;
+border: 1px solid #e6e6e6;
+border-radius: 10px;
+}
+
+/* ========== 求学经历 ========== */
+
+.edu-box
+{
+background-color: var(--accent-soft);
+border-radius: 16px;
+padding: 8px 20px 20px;
+margin: 0 24px 24px;
+}
+
+.stage-wrap
+{
+display: flex;
+flex-wrap: wrap;
+gap: 16px;
+}
+
+.stage
+{
+flex: 1 1 300px;
+margin: 0;
+padding: 14px 16px;
+background-color: white;
+border: 1px solid #dddddd;
+border-radius: 12px;
+box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+transition: box-shadow 0.2s, border-color 0.2s;   /* 悬停效果平滑过渡 */
+}
+
+.stage:hover
+{
+border-color: var(--accent);                       /* 悬停时边框变主色 */
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.14);        /* 阴影加深，像被轻轻抬起 */
+}
+
+.stage img
+{
+display: block;                /* 图片独占一行 */
+margin: 12px auto 0;           /* 上 12px、左右自动、下 0 => 图片在卡片里居中 */
+}
+
+.stage a
+{
+color: var(--accent);
+font-size: 14px;
+}
+
+/* ========== 学习方向 / 联系我（两个同款栏目，共用 .box） ========== */
+
+.box
+{
+background-color: var(--accent-soft);
+border-radius: 16px;           /* 和其他板块统一为 16px（原 .study 是 12px） */
+margin: 0 24px 24px;
+padding: 8px 20px 20px;
+}
+
+.box a
+{
+color: var(--accent);          /* 板块里的链接（邮箱）用主色 */
+}
+
+/* ========== 底部标语 ========== */
+
+.slogan
+{
+text-align: center;
+font-size: 26px;
+color: #64748b;                /* 灰蓝，比纯黑柔和，和新主题色配套 */
+letter-spacing: 2px;           /* 每个字符之间的间距加宽 2px */
+margin: 8px 0 20px;
+}
+
+/* ========== 回到顶部按钮 ========== */
+
+.back-to-top
+{
+position: fixed;               /* 固定在窗口上：页面怎么滚，它都待在原处 */
+right: 24px;                   /* 距窗口右缘 24px */
+bottom: 24px;                  /* 距窗口下缘 24px */
+width: 48px;
+height: 48px;
+line-height: 48px;             /* 行高等于按钮高度 => 箭头在圆里竖直居中 */
+text-align: center;
+background-color: var(--accent);
+color: white;
+border-radius: 50%;            /* 正圆按钮 */
+text-decoration: none;         /* 去掉链接下划线 */
+font-size: 22px;
+box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.back-to-top:hover
+{
+background-color: #1640a8;     /* 悬停时变深一点的蓝 */
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.28);
+}
+
+/* ========== 手机窄屏微调（窗口宽度 ≤480px 时生效） ========== */
+
+@media (max-width: 480px)
+{
+.greeting
+{
+font-size: 32px;               /* 大标题在手机上收小 */
+margin: 8px 16px 16px;
+}
+
+.basic-info-wrap, .hobbies, .edu-box, .box
+{
+margin-left: 16px;             /* 板块左右留白从 24px 收到 16px */
+margin-right: 16px;
+}
+
+.title
+{
+font-size: 22px;
+}
+
+.stage img
+{
+width: 96px;                   /* 校徽在手机上缩小（CSS 会盖过标签里的 width 属性） */
+height: 96px;
+}
+
+.main
 {
 margin-top: 16px;
 margin-bottom: 16px;
 }
 
-.hobbies
+.slogan
 {
-border-radius: 16px;
-background-color: #f4f4f4;
-padding: 8px 20px 8px;
-margin-bottom: 24px;
-margin-right: 24px;
-margin-left: 24px;
+font-size: 20px;
 }
 
-.title
+.back-to-top
 {
-border-left: 8px solid blue;
-padding-left: 12px;
-line-height: 1.5;
+right: 16px;
+bottom: 16px;
 }
-
-.study
-{
-background-color: pink;
-border-radius: 12px;
-margin-right: 24px;
-margin-left: 24px;
-padding: 8px 20px 8px;
 }
-
 
 </style>
 </head>
@@ -153,89 +334,143 @@ padding: 8px 20px 8px;
 <body>
 
 <nav class="navbar">
-    <a href="#top">首页</a>
-    <a href="#info">个人信息</a>
-    <a href="#hobby">爱好</a>
-    <a href="#education">求学经历</a>
-    <a href="#direction">学习方向</a>
+<a href="#top">首页</a>
+<a href="#info">个人信息</a>
+<a href="#hobby">爱好</a>
+<a href="#education">求学经历</a>
+<a href="#direction">学习方向</a>
+<a href="#contact">联系我</a>
 </nav>
 
 <main class="main">
-    <h1 class="greeting">欢迎来到我的个人主页！</h1>
+<h1 class="greeting" id="top">欢迎来到我的个人主页！</h1>
 
-    <div class="basic-info-wrap" id="info">
-        <div class="basic-info-image">
-            <img src="web_project/微信头像.jpg" alt="张嘉杰的微信头像" width="180" height="180"><br>
-            <i>↑这是我的微信头像↑</i>
-        </div>
-        <div class="basic-info">
-            <h1>你好，我是张嘉杰</h1>
+<div class="basic-info-wrap" id="info">
+<div class="basic-info-image">
+<img src="web_project/微信头像.jpg" alt="张嘉杰的微信头像" width="180" height="180"><br>
+<i>↑这是我的微信头像↑</i>
+</div>
+<div class="basic-info">
+<h2>你好，我是张嘉杰</h2>
+<h3>生日：2007年11月6日</h3>
+<h3>家乡：上海</h3>
+</div>
+</div>
 
-            <h3>生日：2007年11月6日</h3>
+<div id="hobby" class="hobbies">
+<h2 class="title">我的爱好：</h2>
 
-            <h3>家乡：上海</h3>
-        </div>
-    </div>
+<div class="hobby-list">
+<p class="hobby-item">1. 看足球比赛</p>
+<p class="hobby-item">2. 听音乐</p>
+<p class="hobby-item">3. 语言学习与研究（吴方言、外语）</p>
+</div>
+</div>
 
-    <div id="hobby" class="hobbies">
-        <div class="title">
-            <h1>我的爱好：</h1>
+<div id="education" class="edu-box">
+<h2 class="title">求学经历：</h2>
 
-        </div>
+<div class="stage-wrap">
 
-        <p>1. 看足球比赛</p>
+<p class="stage">
+小学：华东师范大学宝山实验学校（2014.09-2019.06）<br>
+<img src="web_project/华师宝山.webp" alt="华师宝山校徽" width="120" height="120">
+</p>
 
-        <p>2. 听音乐</p>
+<p class="stage">
+初中：华东师范大学宝山实验学校（2019.09-2023.06）<br>
+<img src="web_project/华师宝山.webp" alt="华师宝山校徽" width="120" height="120">
+</p>
 
-        <p>3. 语言学习与研究（吴方言、外语）</p>
+<p class="stage">
+高中：上海市行知中学（2023.09-2026.06）<br>
+<img src="web_project/上海市行知中学校徽.webp" alt="上海市行知中学校徽" width="120" height="120">
+<a href="https://school.bsedu.org.cn/xzhs/" target="_blank" rel="noopener noreferrer">点击访问上海市行知中学官网</a>
+</p>
 
-    </div>
+<p class="stage">
+大学（本科）：上海外国语大学-数据科学与大数据技术（认知科学大数据）（2026.09-至今）<br>
+<img src="web_project/上外校徽.jpg" alt="上海外国语大学校徽" width="150" height="150">
+<a href="https://www.shisu.edu.cn/" target="_blank" rel="noopener noreferrer">点击访问上海外国语大学官网</a>
+</p>
 
-    <div id="education" class="edu-box" style="background-color:#f4f4f4">
-        <h1 class="title">求学经历：</h1>
+</div>
 
-        <div class="stage-wrap">
+<p>
+<i>*不知道以后是否还会继续深造！</i>
+</p>
+</div>
 
-            <p class="stage">
-            小学：华东师范大学宝山实验学校（2014.09-2019.06）<br>
-            <img src="web_project/华师宝山.webp" alt="华师宝山校徽" width="120" height="120">
-            </p>
+<div id="direction" class="box">
+<h2 class="title">我的学习方向：</h2>
 
-            <p class="stage">
-            初中：华东师范大学宝山实验学校（2019.09-2023.06）<br>
-            <img src="web_project/华师宝山.webp" alt="华师宝山校徽" width="120" height="120">
-            </p>
+<p>
+当今时代，AI技术空前发达，我需要在扎实学习理工科知识技能的同时，发掘、培养AI不具备而由人所独有的特质和能力，那就是情感、创造力、批判性思维和人文关怀。我希望通过跨学科交叉融合的学习实践，成为文理兼备的复合型人才，实现理想、造福人类！
+</p>
+</div>
 
-            <p class="stage">
-            高中：上海市行知中学（2023.09-2026.06）<br>
-            <img src="web_project/上海市行知中学校徽.webp" alt="上海市行知中学校徽" width="120" height="120">
-            <a href="https://school.bsedu.org.cn/xzhs/" target="_blank" rel="noopener noreferrer">点击访问上海市行知中学官网</a>
-            </p>
+<div id="contact" class="box">
+<h2 class="title">联系我</h2>
 
-            <p class="stage">
-            大学（本科）：上海外国语大学-数据科学与大数据技术（认知科学大数据）（2026.09-至今）<br>
-            <img src="web_project/上外校徽.jpg" alt="上海外国语大学校徽" width="150" height="150">
-            <a href="https://www.shisu.edu.cn/" target="_blank" rel="noopener noreferrer">点击访问上海外国语大学官网</a>
-            </p>
+<p>
+我的邮箱：<a href="mailto:0261139007@shisu.edu.cn">0261139007@shisu.edu.cn</a>
+</p>
+</div>
 
-        </div>
-
-        <p>
-        <i>*不知道以后是否还会继续深造！</i>
-        </p>
-    </div>
-
-    <div id="direction" class="study">
-        <h1 class="title">我的学习方向：</h1>
-
-        <p>
-        当今时代，AI技术空前发达，我需要在扎实学习理工科知识技能的同时，发掘、培养AI不具备而由人所独有的特质和能力，那就是情感、创造力、批判性思维和人文关怀。我希望通过跨学科交叉融合的学习实践，成为文理兼备的复合型人才，实现理想、造福人类！
-        </p>
-    </div>
-
-    <h1 style="text-align:center">Interpret The World, Translate The Future.</h1>
+<p class="slogan">Interpret The World, Translate The Future.</p>
 
 </main>
+
+<a class="back-to-top" href="#top" title="回到顶部">↑</a>
+
+<script>
+
+/* ========== 导航栏高亮：滚到哪个板块，就高亮哪个链接 ========== */
+
+/* 1. 先找到所有要操作的元素 */
+var navLinks = document.querySelectorAll(".navbar a");
+var sections = document.querySelectorAll("#top, #info, #hobby, #education, #direction, #contact");
+
+/* 2. 定义"重新判断该高亮谁"这件事 */
+function updateHighlight()
+{
+    var currentId = "top";        /* 先默认"当前在顶部（首页）" */
+
+    /* 挨个量每个板块顶边的位置：谁已经越过"判断线"（距窗口顶部 100px），谁就是当前板块 */
+    for (var i = 0; i < sections.length; i++)
+    {
+        if (sections[i].getBoundingClientRect().top <= 100)
+        {
+            currentId = sections[i].id;
+        }
+    }
+
+    /* 特殊处理：滚到页面最底部时，最后一个板块的顶边可能离窗口顶还很远，强行认它是当前板块 */
+    var atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+    if (atBottom)
+    {
+        currentId = sections[sections.length - 1].id;
+    }
+
+    /* 按照 currentId，给对应的链接加上 active，其余链接去掉 active */
+    for (var j = 0; j < navLinks.length; j++)
+    {
+        if (navLinks[j].getAttribute("href") === "#" + currentId)
+        {
+            navLinks[j].classList.add("active");
+        }
+        else
+        {
+            navLinks[j].classList.remove("active");
+        }
+    }
+}
+
+/* 3. 页面每次发生滚动，就执行一次；页面刚打开时也先执行一次 */
+window.addEventListener("scroll", updateHighlight);
+updateHighlight();
+
+</script>
 
 </body>
 
